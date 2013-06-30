@@ -52,11 +52,11 @@ static void draw_table(int c0)
             switch(wcwidth(c))
             {
             case 1:
-                printf("%C", c);
+                printf("%C", (wint_t)c);
                 printf("\e[0;34%sm%C", (y&1)?";1":"", 0x2588);
                 break;
             case 2:
-                printf("%C", c);
+                printf("%C", (wint_t)c);
                 break;
             default:
                 printf("\e[0;34%sm%C%C", (y&1)?";1":"", 0x2588, 0x2588);
