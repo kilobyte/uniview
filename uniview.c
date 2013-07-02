@@ -34,9 +34,10 @@ static void draw_table(int c0)
         printf("\e[%d;%df%c", y+5, 1, hexdigits[(y+c0)&0xf]);
     for (x=0; x<COLS/2-1; x++)
     {
-        snprintf(label, sizeof(label), "%4X", ((c0>>4)+x)&0xFffff);
-        if ((c0>>4)+x>=0x100000)
-            label[0]='G';
+        if ((c0>>4)+x<0x10000)
+            snprintf(label, sizeof(label), "%4X", (c0>>4)+x);
+        else
+            snprintf(label, sizeof(label), "G%03X", ((c0>>4)+x)&0xffff);
         for (y=0; y<4; y++)
             if (label[y])
                 printf("\e[%d;%df%c", y+1, 2*x+3, label[y]);
@@ -117,6 +118,8 @@ int main()
         case KEY_PGDN_ALT:
         case ' ':
             c0 += (COLS/2-1)*16;
+            if (c0+(COLS/2-1)*16>=0x110000)
+                c0=0x110000-(COLS/2-1)*16;
             break;
         case 'q':
         case 'Q':
