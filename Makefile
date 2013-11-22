@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-Wall -Werror
+CFLAGS=-Wall -Werror -Wmissing-declarations
 
 uniview: uniview.o getkey.o tos.o
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $^

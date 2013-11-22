@@ -1,14 +1,16 @@
 # include <termios.h>
 # include <unistd.h>
 
+#include "tos.h"
+
 static struct termios old_tattr;
 
-int kbd_raw()
+void kbd_raw()
 {
     struct termios tattr;
 
     if (!isatty(0))
-        return 0;
+        return;
 
     tcgetattr(0,&old_tattr);
     tattr=old_tattr;
@@ -26,8 +28,6 @@ int kbd_raw()
     tattr.c_cc[VMIN]=1;
     tattr.c_cc[VTIME]=0;
     tcsetattr(0,TCSANOW,&tattr);
-
-    return 1;
 }
 
 void kbd_restore()
