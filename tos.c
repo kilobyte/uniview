@@ -1,7 +1,11 @@
-# include <termios.h>
-# include <unistd.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <signal.h>
 
 #include "tos.h"
+
+int COLS=80, ROWS=25;
 
 static struct termios old_tattr;
 
@@ -34,4 +38,27 @@ void kbd_restore()
 {
     tcdrain(0);
     tcsetattr(0,TCSADRAIN,&old_tattr);
+}
+
+void tty_get_size()
+{
+    struct winsize ts;
+
+    if (ioctl(1,TIOCGWINSZ,&ts) || ts.ws_row<=0 || ts.ws_col<=0)
+    {   /* not a terminal or a broken one*/
+        COLS=80;
+        ROWS=25;
+        return;
+    }
+    COLS=ts.ws_col;
+    ROWS=ts.ws_row;
+}
+
+void tty_setup_winch()
+{
+    struct sigaction sa;
+    sa.sa_handler = tty_get_size;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags   = SA_RESTART;
+    sigaction(SIGWINCH, &sa, 0);
 }

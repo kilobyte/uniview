@@ -6,8 +6,6 @@
 #include "getkey.h"
 #include "tos.h"
 
-static int COLS=80, ROWS=25;
-
 static void draw_legend()
 {
     int x, y;
@@ -73,6 +71,8 @@ int main()
     int c0;
     
     setlocale(LC_CTYPE, "");
+    tty_get_size();
+    tty_setup_winch();
     kbd_raw();
     
     draw_legend();
