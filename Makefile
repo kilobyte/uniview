@@ -1,10 +1,11 @@
+CC=cc
 CFLAGS=-Wall -Werror
 
 uniview: uniview.o getkey.o tos.o
-	gcc $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $^
 
 .c.o:
-	gcc $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 
 uniview.o: getkey.h tos.h
 getkey.o: getkey.h
