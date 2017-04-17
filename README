@@ -1,0 +1,15 @@
+Many terminals suffer from display bugs for certain glyphs, making them
+spill over to neighbouring cells -- usually to the right but going up or
+down also happens.  Even worse, this spillage depends heavily on the order
+characters are written to the screen, cursor jumps and attribute changes.
+
+This character map tool helps you find characters that display ok on your
+terminal, trying to trigger as many bugs as possible.  Ie, if a given
+character is not clipped, it should probably be safe to use.  For you.
+Other setups might display different problems, but that can't be helped.
+
+Usage:
+Compile (no dependencies needed -- not even curses), run with no args.
+
+Keys:
+PgUp/PgDn to navigate, F1-F4 jumps to few spots, q exits.
