@@ -8,6 +8,9 @@ terminal, trying to trigger as many bugs as possible.  Ie, if a given
 character is not clipped, it should probably be safe to use.  For you.
 Other setups might display different problems, but that can't be helped.
 
+Caveat: do not run this inside screen or tmux -- they will intercept and
+optimize carefully deoptimized ordering, thus hiding a good part of issues.
+
 Usage:
 Compile (no dependencies needed -- not even curses), run with no args.
 
